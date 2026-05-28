@@ -1,0 +1,683 @@
+#wpbody-content > *:not(#bvs-settings),
+#wpfooter {
+    display: none;
+}
+
+#update-nag,
+.update-nag,
+.updated,
+.error,
+.is-dismissible {
+    display: none;
+}
+
+.rtl {
+    #bvs-settings-menu {
+        .bvs-settings-menu-group {
+            .bvs-settings-icon {
+                margin-right: 0;
+                margin-left: 2px;
+            }
+        }
+    }
+    
+    #bvs-settings-container {
+        .bvs-setting-required {
+            border-radius: 3px;
+            margin-left: 0;
+        }
+    }
+
+    .bvs-settings-scroll-to-top {
+        left: 20px;
+        right: initial;
+    }
+}
+
+#bvs-settings-buttons {
+    margin-bottom: 20px;
+}
+
+#bvs-settings {
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+        line-height: 2;
+        min-height: 30px;
+    }
+}
+
+#bvs-settings-menu,
+.bvs-settings-group {
+    background-color: white;
+    border-radius: 5px;
+
+    .bvs-settings-menu-group,
+    .bvs-settings-subgroup, {
+        padding: 6px;
+        border-bottom: 1px solid #ddd;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+#bvs-settings-menu {
+    .bvs-settings-menu-header {
+        padding: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+        font-weight: 300;
+        font-size: 1.2em;
+    }
+
+    .bvs-settings-menu-group {
+        display: block;
+        text-decoration: none;
+        color: #444;
+        cursor: pointer;
+
+        &:first-child {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        &:last-child {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        &.active {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+
+        .bvs-settings-noicon {
+            display: inline-block;
+            width: 18px;
+        }
+        .bvs-settings-icon {
+            vertical-align: middle;
+            margin-right: 2px;
+            position: relative;
+            top: 1px;
+
+            svg {
+                fill: #ddd;
+            }
+        }
+    }
+}
+
+#bvs-settings-menu-search-message {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: left;
+    color: #666;
+    font-size: 14px;
+
+    a {
+        color: #2271b1;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            color: #135e96;
+            text-decoration: underline;
+        }
+    }
+}
+
+#bvs-settings-menu.bvs-settings-menu-search {
+    .bvs-settings-search-summary,
+    .bvs-settings-search-footer {
+        padding: 0 10px 10px 10px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+    }
+
+    .bvs-settings-search-footer {
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+    }
+
+    .bvs-settings-search-footer a {
+        color: #2271b1;
+        text-decoration: none;
+
+        &:hover {
+            color: #135e96;
+            text-decoration: underline;
+        }
+    }
+
+    .bvs-settings-search-group + .bvs-settings-search-group {
+        border-top: 1px solid #ddd;
+    }
+
+    .bvs-settings-search-group-button,
+    .bvs-settings-search-subgroup-button,
+    .bvs-settings-search-item {
+        display: flex;
+        width: 100%;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        color: #444;
+    }
+
+    .bvs-settings-search-group-button,
+    .bvs-settings-search-subgroup-button {
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        padding: 10px;
+
+        &:hover {
+            background-color: #f6f7f7;
+        }
+    }
+
+    .bvs-settings-search-group-button {
+        .bvs-settings-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg {
+            fill: #ddd;
+        }
+    }
+
+    .bvs-settings-search-subgroups,
+    .bvs-settings-search-items {
+        border-top: 1px solid #eee;
+    }
+
+    .bvs-settings-search-subgroup {
+        background-color: #fafafa;
+    }
+
+    .bvs-settings-search-subgroup + .bvs-settings-search-subgroup {
+        border-top: 1px solid #eee;
+    }
+
+    .bvs-settings-search-subgroup-button {
+        padding-left: 20px;
+        font-weight: 500;
+    }
+
+    .bvs-settings-search-item {
+        padding: 8px 10px 8px 28px;
+        font-size: 13px;
+
+        &:hover {
+            background-color: #f0f6fc;
+            color: #135e96;
+        }
+    }
+
+    #bvs-settings-menu-search-message {
+        border-radius: 0;
+        padding-top: 0;
+    }
+}
+
+#bvs-settings-buttons {
+    background-color: white;
+    border-radius: 5px;
+    padding-bottom: 6px;
+
+    .bvs-settings-changes-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 6px;
+        gap: 6px;
+
+        > * {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .bvs-settings-changes-save-wrapper,
+        .bvs-settings-changes-summary-wrapper {
+            display: flex;
+
+            > button {
+                width: 100%;
+                margin: 0;
+            }
+        }
+    }
+
+    .bvs-settings-search-wrapper {
+        position: relative;
+        margin: 0 6px;
+    }
+
+    #bvs-settings-search {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding-right: 30px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        font-size: 14px;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: none;
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
+        }
+    }
+
+    .bvs-settings-search-clear {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        line-height: 1;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    .bvs-settings-search-indicator {
+        margin: 8px 10px 0 10px;
+        padding: 8px;
+        background-color: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 3px;
+        color: #856404;
+        font-size: 12px;
+        text-align: center;
+    }
+}
+
+#bvs-settings-menu.bvs-settings-menu-changed {
+    .bvs-settings-changed-back {
+        padding: 10px 10px 0 10px;
+        font-size: 12px;
+
+        a {
+            color: #2271b1;
+            text-decoration: none;
+
+            &:hover {
+                color: #135e96;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .bvs-settings-changed-actions {
+        padding: 0 10px 10px 10px;
+        border-bottom: 1px solid #ddd;
+
+        .button {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    .bvs-settings-changed-actions-bottom {
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        border-bottom: none;
+    }
+
+    .bvs-settings-changed-list {
+        .bvs-settings-changed-item-row:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .bvs-settings-changed-item-row {
+        display: flex;
+        gap: 6px;
+        align-items: flex-start;
+        padding: 8px 10px;
+        border-bottom: 1px solid #ddd;
+
+        &:hover {
+            background-color: #f6f7f7;
+        }
+    }
+
+    .bvs-settings-changed-item {
+        display: block;
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 0;
+        background: transparent;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .bvs-settings-changed-item-cancel {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #666;
+
+        &:hover {
+            color: #2271b1;
+        }
+    }
+
+    .bvs-settings-changed-item-cancel-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+
+        .bvs-settings-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        svg g,
+        svg path,
+        svg polyline,
+        svg line,
+        svg circle {
+            fill: none;
+            stroke: currentColor;
+        }
+    }
+
+    .bvs-settings-changed-item-name,
+    .bvs-settings-changed-item-context,
+    .bvs-settings-changed-item-badge {
+        display: block;
+    }
+
+    .bvs-settings-changed-item-name {
+        color: #444;
+        font-weight: 600;
+    }
+
+    .bvs-settings-changed-item-context {
+        margin-top: 2px;
+        color: #666;
+        font-size: 12px;
+    }
+
+    .bvs-settings-changed-item-badge {
+        margin-top: 6px;
+        color: #856404;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+}
+
+#bvs-settings-container {
+    .bvs-settings-group {
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+
+        & > .bvs-setting-documentation,
+        & > .bvs-settings-group-container {
+            padding: 25px;
+            padding-bottom: 0;
+        }
+    }
+
+    .bvs-setting-required {
+        background-color: darkred;
+        color: white;
+
+        padding: 3px 5px;
+        margin-left: -10px;
+        margin-right: 5px;
+
+        border-radius: 3px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        text-decoration: none;
+        font-weight: normal;
+        font-size: 0.8em;
+    }
+
+    .bvs-settings-group > .bvs-setting-required {
+        display: block;
+        font-size: 1.2em;
+        border-radius: 3px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 6px 10px;
+        margin: 0;
+    }
+
+    .bvs-settings-group-name,
+    .bvs-settings-subgroup-name {
+        text-align: center;
+    }
+    .bvs-settings-group-name {
+        padding: 20px 10px 0 10px;
+        padding-bottom: 0;
+        margin: 5px 0;
+        font-size: 1.8em;
+        font-weight: 400;
+    }
+    .bvs-settings-subgroup-name {
+        margin: 5px 0 15px 0;
+        font-size: 1.6em;
+        font-weight: 300;
+    }
+
+    .bvs-settings-group-description {
+        padding: 10px 25px 0 25px;
+    }
+
+    .bvs-settings-group-description,
+    .bvs-settings-subgroup-description {
+        font-style: italic;
+    }
+
+    .bvs-settings-subgroup-description + .bvs-settings-group-container,
+    .bvs-settings-subgroup-description + .bvs-setting-documentation + .bvs-settings-group-container {
+        margin-top: 20px;
+    }
+
+    .bvs-setting-container {
+        margin-bottom: 25px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .bvs-setting-label {
+            display: block;
+            font-weight: bold;
+        }
+        .bvs-setting-description {
+            display: block;
+            font-style: italic;
+            margin-top: 2px;
+        }
+        .bvs-setting-input-container {
+            margin-top: 5px;
+
+            input {
+                &[type=text],
+                &[type=email],
+                &[type=number] {
+                    width: 100%;
+                }
+            }
+
+            select {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.bvs-settings-scroll-to-top {
+    background-color: #444;
+    border-radius: 100%;
+    
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 30px;
+    height: 30px;
+    text-align: center;
+
+    .bvs-settings-icon {
+        position: relative;
+        top: 7px;
+
+        path {
+            fill: white;
+            stroke: white;
+        }
+    }
+}
+
+.bvs-settings-error {
+    color: darkred;
+    font-weight: bold;
+}
+
+mark {
+    background-color: #ffeb3b;
+    padding: 2px 0;
+    color: inherit;
+}
+
+@media screen and (min-width: 783px) {
+    .rtl {
+        #bvs-settings-container {
+            margin-right: 225px;
+            margin-left: 0;
+    
+            .bvs-settings-subgroup-name {
+                text-align: right;
+            }
+
+            .bvs-setting-required {
+                margin-right: 5px;
+                margin-left: 0;
+            }
+    
+            .bvs-setting-label-container {
+                margin-left: 5%;
+                margin-right: 0;
+            }
+        }
+    }
+
+    #bvs-settings-sidebar {
+        position: fixed;
+        width: 200px;
+        max-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #bvs-settings-menu {
+        flex: 0 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    #bvs-settings-container {
+        margin-left: 225px;
+        padding-bottom: 70%;
+
+        .bvs-settings-subgroup-name {
+            text-align: left;
+        }
+
+        .bvs-settings-subgroup {
+            padding: 25px;
+            padding-top: 10px;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+
+        .bvs-setting-required {
+            margin-left: -25px;
+        }
+
+        .bvs-setting-label-container,
+        .bvs-setting-input-container {
+            vertical-align: top;
+        }
+
+        .bvs-setting-label-container {
+            display: inline-block;
+            width: 45%;
+            margin-right: 5%;
+        }
+        .bvs-setting-input-container {
+            display: inline-block;
+            width: 50%;
+        }
+
+        .bvs-setting-container-full {
+            .bvs-setting-label-container,
+            .bvs-setting-input-container {
+                display: block;
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    }
+
+    .bvs-settings-scroll-to-top {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .rtl {
+        #bvs-settings-container {
+            margin-right: 275px;
+            margin-left: 0;
+        }
+    }
+    #bvs-settings-sidebar {
+        width: 250px;
+    }
+
+    #bvs-settings-container {
+        margin-left: 275px;
+    }
+}

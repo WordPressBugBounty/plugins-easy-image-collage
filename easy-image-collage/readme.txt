@@ -3,8 +3,8 @@ Contributors: BrechtVds
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QG7KZMGFU325Y
 Tags: collage, grid, gallery, image, photo
 Requires at least: 3.5
-Tested up to: 6.9
-Stable tag: 1.13.6
+Tested up to: 7.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,7 @@ We also have a [Easy Image Collage Premium version](http://bootstrapped.ventures
 *   **Adjust borders** to get layouts however you want
 *   Use **image manipulation** to get them just right
 *   Apply **Instagram-like filters** to your images
+*   Add **text frames** to your collages
 *   Show the image sizes for **pixel perfect** collages
 
 
@@ -61,6 +62,18 @@ We also have a [Easy Image Collage Premium version](http://bootstrapped.ventures
 
 
 == Changelog ==
+= 2.0.0 =
+* Feature: Collages overview page
+* Feature: Add existing collage to post or page
+* Feature: Set border radius for collages
+* Feature: Set optional name for collages
+* Feature: Modern settings UI
+* Improvement: Collage edit UI
+* Improvement: Output sourceset for images
+* Improvement: Block Editor iFrame compatibility
+* Fix: Load text domain at correct time
+* Fix: Enhanced data validation and output escaping
+
 = 1.13.6 =
 * Fix: Make sure user has the correct capability to edit image collages
 
@@ -164,6 +177,9 @@ We also have a [Easy Image Collage Premium version](http://bootstrapped.ventures
 * The very first version of the Easy Image Collage plugin
 
 == Upgrade notice ==
+= 2.0.0 =
+Some great new features and improvements
+
 = 1.13.6 =
 Update to fix a potential security risk that could allow logged in users to edit collages
 

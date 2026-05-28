@@ -1,0 +1,33 @@
+.bvs-setting-input {
+    .ql-editor p {
+        margin-bottom: 10px;
+    }
+
+    .cm-editor {
+        height: 200px;
+        border: 1px solid #ddd;
+    }
+
+    &[type="number"] {
+        max-width: 100px;
+    }
+}
+
+textarea.bvs-setting-input {
+    width: 100%;
+    line-height: 2;
+    min-height: 30px;
+}
+
+.bvs-setting-object-table {
+    width: 100%;
+
+    th {
+        text-align: left;
+    }
+
+    input,
+    textarea {
+        width: 95%;
+    }
+}

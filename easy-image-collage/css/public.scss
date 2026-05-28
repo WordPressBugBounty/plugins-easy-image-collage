@@ -1,4 +1,4 @@
-@import "shared";
+@use "shared";
 
 .eic-container {
   margin-bottom: 20px;
@@ -33,6 +33,38 @@
       }
       position: absolute;
       padding: 5px;
+    }
+
+    .eic-text-frame-content {
+      overflow: hidden;
+      overflow-wrap: anywhere;
+
+      p,
+      li,
+      blockquote,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: inherit;
+        line-height: inherit;
+        letter-spacing: inherit;
+      }
+
+      > *:first-child {
+        margin-top: 0;
+      }
+
+      > *:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+      }
     }
   }
 

@@ -9,7 +9,7 @@ class EIC_Plugin_Action_Link {
 
     public function action_links( $links )
     {
-        $links[] = '<a href="'. get_admin_url(null, 'options-general.php?page=eic_settings') .'">'.__( 'Settings', 'easy-image-collage' ).'</a>';
+        $links[] = '<a href="'. EIC_Admin_Menu::get_settings_url() .'">'.__( 'Settings', 'easy-image-collage' ).'</a>';
 
         return $links;
     }

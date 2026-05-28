@@ -68,15 +68,36 @@ var EIC_Responsive = {
             // Borders
             var orig_border = frame.data('orig-border');
             var border = Math.ceil(orig_border * change_ratio);
+            var orig_radius = frame.data('orig-radius') || 0;
+            var radius = Math.ceil(orig_radius * change_ratio);
+            var image_radius = Math.max(0, radius - border);
 
             // Change frame styling
             frame
                 .css('width', new_frame_width + 'px')
                 .css('height', new_frame_width / frame_ratio + 'px')
-                .css('border-width', border + 'px');
+                .css('border-width', border + 'px')
+                .css('border-radius', radius + 'px')
+                .css('overflow', 'hidden');
+
+            frame.find('.eic-image')
+                .css('border-top-left-radius', '')
+                .css('border-top-right-radius', '')
+                .css('border-bottom-left-radius', '')
+                .css('border-bottom-right-radius', '');
+
+            frame.find('.eic-corner-top-left').css('border-top-left-radius', image_radius + 'px');
+            frame.find('.eic-corner-top-right').css('border-top-right-radius', image_radius + 'px');
+            frame.find('.eic-corner-bottom-left').css('border-bottom-left-radius', image_radius + 'px');
+            frame.find('.eic-corner-bottom-right').css('border-bottom-right-radius', image_radius + 'px');
 
             _el.find('.eic-image').each(function() {
                 var image = jQuery(this);
+
+                if (image.data('frame-type') === 'text') {
+                  image.css('border-width', border + 'px');
+                  return;
+                }
 
                 if ( responsive_layout && container_width < responsive_breakpoint ) {                  
                   // Change image styling (New)

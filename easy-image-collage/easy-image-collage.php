@@ -3,14 +3,14 @@
 Plugin Name: Easy Image Collage
 Plugin URI: 
 Description: Create beautiful responsive image collages for all your posts and pages
-Version: 1.13.6
+Version: 2.0.0
 Author: Bootstrapped Ventures
 Author URI: https://bootstrapped.ventures
 License: GPLv2
 Text Domain: easy-image-collage
 Domain Path: /lang
 */
-define( 'EIC_VERSION', '1.13.6' );
+define( 'EIC_VERSION', '2.0.0' );
 define( 'EIC_POST_TYPE', 'eic_grid' );
 
 class EasyImageCollage {
@@ -70,12 +70,11 @@ class EasyImageCollage {
 	}
 
     /**
-     * Access a VafPress option with optional default value
+     * Access a plugin setting with optional default value.
      */
     public static function option( $name, $default = null )
     {
-        $option = vp_option( 'eic_option.' . $name );
-        return is_null( $option ) ? $default : $option;
+        return self::get()->helper( 'settings' )->get( $name, $default );
     }
 
     public $pluginName = 'easy-image-collage';
@@ -92,9 +91,6 @@ class EasyImageCollage {
      */
     public function init()
     {
-        // Load external libraries
-        require_once( 'vendor/vafpress/bootstrap.php' );
-
         // Update plugin version
         update_option( $this->pluginName . '_version', EIC_VERSION );
 
@@ -106,28 +102,26 @@ class EasyImageCollage {
 
         // Load textdomain
         if( !self::is_premium_active() ) {
-            $domain = 'easy-image-collage';
-            $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-            load_textdomain( $domain, WP_LANG_DIR.'/'.$domain.'/'.$domain.'-'.$locale.'.mo' );
-            load_plugin_textdomain( $domain, false, basename( dirname( __FILE__ ) ) . '/lang/' );
+            add_action( 'init', array( $this, 'load_textdomain' ), 0 );
         }
 
         // Add core helper directory
         $this->add_helper_directory( $this->coreDir . '/helpers' );
 
         // Load requires helpers
+        $this->helper( 'settings' );
         $this->helper( 'assets' );
         $this->helper( 'blocks' );
         $this->helper( 'marketing' );
         $this->helper( 'post_type' );
         $this->helper( 'shortcode' );
-        $this->helper( 'vafpress' );
+        $this->helper( 'usage_index' );
 
 	    // Include required helpers but don't instantiate
 	    $this->include_helper( 'addons/addon' );
 	    $this->include_helper( 'addons/premium_addon' );
 	    $this->include_helper( 'models/grid' );
+	    $this->helper( 'admin_menu' );
 
         // Load required helpers (admin only)
         if( is_admin() ) {
@@ -136,6 +130,11 @@ class EasyImageCollage {
             $this->helper( 'privacy' );
             $this->helper( 'shortcode_button' );
         }
+    }
+
+    public function load_textdomain()
+    {
+        load_plugin_textdomain( 'easy-image-collage', false, $this->corePath . '/lang/' );
     }
 
     /**

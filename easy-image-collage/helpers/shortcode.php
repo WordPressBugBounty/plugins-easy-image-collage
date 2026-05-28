@@ -9,6 +9,11 @@ class EIC_Shortcode {
 
     function eic_shortcode( $options )
     {
+        return $this->render_collage( $options, false );
+    }
+
+    public function render_collage( $options, $allow_trash = false )
+    {
         $options = shortcode_atts( array(
             'id' => '0', // If no ID given, show a random recipe
         ), $options );
@@ -17,20 +22,26 @@ class EIC_Shortcode {
 
         $output = '';
 
-        if( !is_null( $post ) && $post->post_type == EIC_POST_TYPE ) {
+        if( !is_null( $post ) && $post->post_type == EIC_POST_TYPE && ( $allow_trash || 'trash' !== $post->post_status ) ) {
 	        $grid = new EIC_Grid( $post );
 
             if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
                 foreach( $grid->images() as $id => $image ) {
-                    if ( $image ) {
-                        $thumb = wp_get_attachment_image( $image['attachment_id'], 'large' );
+                    if ( $image && isset( $image['type'] ) && 'text' === $image['type'] ) {
+                        $style = isset( $image['text_style'] ) && is_array( $image['text_style'] ) ? $image['text_style'] : array();
+                        $output .= '<div style="text-align: center; margin-bottom: 10px; padding: ' . intval( isset( $style['padding'] ) ? $style['padding'] : 12 ) . 'px; color: ' . esc_attr( isset( $style['color'] ) ? $style['color'] : '#111111' ) . '; background-color: ' . esc_attr( isset( $style['backgroundColor'] ) ? $style['backgroundColor'] : '#ffffff' ) . ';">' . wp_kses_post( isset( $image['text_content'] ) ? $image['text_content'] : '' ) . '</div>';
+                        continue;
+                    }
+
+                    if ( $image && ( ! isset( $image['type'] ) || 'text' !== $image['type'] ) ) {
+                        $thumb = wp_get_attachment_image( absint( $image['attachment_id'] ), 'large' );
 
                         if ( $thumb ) {
                             $output .= $thumb;
 
                             if( EasyImageCollage::is_addon_active( 'captions' ) ) {
                                 if( isset( $image['custom_caption'] ) && $image['custom_caption'] ) {
-                                    $output .= '<div style="text-align: center; margin-bottom: 10px; font-size: 0.8em;">' . $image['custom_caption'] . '</div>';
+                                    $output .= '<div style="text-align: center; margin-bottom: 10px; font-size: 0.8em;">' . wp_kses_post( $image['custom_caption'] ) . '</div>';
                                 }
                             }
                         }
@@ -38,23 +49,32 @@ class EIC_Shortcode {
                 }
             } else {
                 // Styling
+                $border_color = $grid->border_color();
+                $border_width = $grid->border_width();
+                $border_radius = $grid->border_radius();
+                $inner_border_radius = max( 0, $border_radius - $border_width );
+
                 $output .= '<style>';
-                $output .= '.eic-frame-' . $grid->ID() . ' { width: ' . $grid->width() . 'px; height:' . $grid->height() . 'px; background-color: ' . $grid->border_color() . '; border: ' . $grid->border_width() . 'px solid ' . $grid->border_color() . '; }';
-                $output .= '.eic-frame-' . $grid->ID() . ' .eic-image { border: ' . $grid->border_width() . 'px solid ' . $grid->border_color() . '; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' { width: ' . $grid->width() . 'px; height:' . $grid->height() . 'px; background-color: ' . $border_color . '; border: ' . $border_width . 'px solid ' . $border_color . '; border-radius: ' . $border_radius . 'px; overflow: hidden; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-image { border: ' . $border_width . 'px solid ' . $border_color . '; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-corner-top-left { border-top-left-radius: ' . $inner_border_radius . 'px; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-corner-top-right { border-top-right-radius: ' . $inner_border_radius . 'px; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-corner-bottom-left { border-bottom-left-radius: ' . $inner_border_radius . 'px; }';
+                $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-corner-bottom-right { border-bottom-right-radius: ' . $inner_border_radius . 'px; }';
 
                 if( EasyImageCollage::option( 'default_style_display', 'image' ) == 'background' ) {
                     foreach( $grid->images() as $id => $image ) {
-                        if( $image ) {
+                        if( $image && ( ! isset( $image['type'] ) || 'text' !== $image['type'] ) ) {
                             $url = $image['attachment_url'];
 
-                            $width = intval( $image['size_x'] );
-                            $height = intval( $image['size_y'] );
+                            $width = max( 1, intval( $image['size_x'] ) );
+                            $height = max( 1, intval( $image['size_y'] ) );
                             $ratio = $width / $height;
 
-                            $thumb = wp_get_attachment_image_src( $image['attachment_id'], array( $width, $height ) );
+                            $thumb = wp_get_attachment_image_src( absint( $image['attachment_id'] ), array( $width, $height ) );
 
                             if( $thumb ) {
-                                $full_file_name = get_attached_file( $image['attachment_id'] );
+                                $full_file_name = get_attached_file( absint( $image['attachment_id'] ) );
                                 $path = str_ireplace( wp_basename( $full_file_name ), '', $full_file_name );
                             
                                 $thumb_url = $thumb[0];
@@ -76,10 +96,10 @@ class EIC_Shortcode {
                                 }
                             }
 
-                            $output .= '.eic-frame-' . $grid->ID() . ' .eic-image-' . $id . ' {';
-                            $output .= 'background-image: url("' . $url . '");';
+                            $output .= '.eic-frame-' . intval( $grid->ID() ) . ' .eic-image-' . intval( $id ) . ' {';
+                            $output .= 'background-image: url("' . $this->css_url( $url ) . '");';
                             $output .= 'background-size: ' . $width . 'px ' . $height . 'px;';
-                            $output .= 'background-position: ' . $image['pos_x'] . 'px ' . $image['pos_y'] . 'px;';
+                            $output .= 'background-position: ' . intval( $image['pos_x'] ) . 'px ' . intval( $image['pos_y'] ) . 'px;';
                             $output .= '}';
                         }
                     }
@@ -113,5 +133,10 @@ class EIC_Shortcode {
         }
 
         return $output;
+    }
+
+    private function css_url( $url )
+    {
+        return str_replace( array( '\\', '"', "\n", "\r", ')' ), '', esc_url( $url ) );
     }
 }
