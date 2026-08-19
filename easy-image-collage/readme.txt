@@ -3,8 +3,8 @@ Contributors: BrechtVds
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QG7KZMGFU325Y
 Tags: collage, grid, gallery, image, photo
 Requires at least: 3.5
-Tested up to: 7.0
-Stable tag: 2.0.0
+Tested up to: 7.1
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ We also have a [Easy Image Collage Premium version](http://bootstrapped.ventures
 
 
 == Changelog ==
+= 2.0.1 =
+* Fix: Performance with multiple collages on the same page
+
 = 2.0.0 =
 * Feature: Collages overview page
 * Feature: Add existing collage to post or page
@@ -177,6 +180,9 @@ We also have a [Easy Image Collage Premium version](http://bootstrapped.ventures
 * The very first version of the Easy Image Collage plugin
 
 == Upgrade notice ==
+= 2.0.1 =
+Performance improvement
+
 = 2.0.0 =
 Some great new features and improvements
 

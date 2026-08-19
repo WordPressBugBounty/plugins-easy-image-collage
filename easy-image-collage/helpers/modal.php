@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 </div>
-                <?php echo EasyImageCollage::get()->helper( 'layouts' )->draw_layouts( true ); ?>
+                <?php echo EasyImageCollage::get()->helper( 'layouts' )->draw_layouts( false ); ?>
                 <div class="eic-custom-layouts">
                     <?php
                     foreach( $grid_custom_layouts as $layout_name => $grid_custom_layout ) {
@@ -198,3 +198,7 @@
         <?php } ?>
     </div>
 </div>
+
+<template id="eic-editable-layout-templates">
+    <?php echo EasyImageCollage::get()->helper( 'layouts' )->draw_layouts( true ); ?>
+</template>

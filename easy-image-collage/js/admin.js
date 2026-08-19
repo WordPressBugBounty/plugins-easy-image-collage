@@ -14,7 +14,7 @@ EasyImageCollage.lightbox_settings = {
     closeOnClick: false,
     closeOnEsc: false,
     afterOpen: function() {
-        var lightbox = jQuery('.eic-lightbox');
+        var lightbox = EasyImageCollage.getLightbox();
         var gridName = EasyImageCollage.editing_grid.name || '';
 
         lightbox.find('#grid-name')
@@ -323,6 +323,34 @@ EasyImageCollage.getDefaultGridName = function(id) {
     return id ? 'Collage #' + id : 'Collage #id';
 };
 
+EasyImageCollage.getLightbox = function() {
+    return jQuery('.eic-lightbox').last();
+};
+
+EasyImageCollage.getEditableLayout = function(layout) {
+    var layoutName = typeof layout === 'string' || layout instanceof String
+        ? '' + layout
+        : jQuery(layout).first().attr('data-layout-name');
+    var template = document.getElementById('eic-editable-layout-templates');
+
+    if (layoutName && template && template.content) {
+        var templateFrames = template.content.querySelectorAll('.eic-frame');
+
+        for (var i = 0; i < templateFrames.length; i++) {
+            if (templateFrames[i].getAttribute('data-layout-name') === layoutName) {
+                return jQuery(templateFrames[i]).clone();
+            }
+        }
+    }
+
+    // Custom layouts are registered in the picker with their editing chrome intact.
+    var fallback = jQuery('.eic-modal').first().find('.eic-layouts .eic-frame').filter(function() {
+        return jQuery(this).attr('data-layout-name') === layoutName;
+    }).first();
+
+    return fallback.clone();
+};
+
 EasyImageCollage.registerGrid = function(id, grid, customLayoutHtml) {
     id = parseInt(id, 10) || 0;
     EasyImageCollage.grids[id] = EasyImageCollage.normalizeGrid(grid, id);
@@ -421,8 +449,18 @@ EasyImageCollage.btnEditGrid = function(id, callback) {
 
     // Load grid layout
     var layout_name = (typeof grid.layout === 'string' || grid.layout instanceof String) ? grid.layout : 'custom-' + id,
-        layout = jQuery('.eic-lightbox .eic-layouts .eic-frame-' + layout_name).clone();
-    jQuery('.eic-editing .eic-container').html(layout);
+        layout = EasyImageCollage.getEditableLayout(layout_name),
+        lightbox = EasyImageCollage.getLightbox();
+
+    if (!layout.length) {
+        if (window.console && window.console.error) {
+            window.console.error('Easy Image Collage: could not find editable layout ' + layout_name + '.');
+        }
+        jQuery.featherlight.close();
+        return;
+    }
+
+    lightbox.find('.eic-editing .eic-container').html(layout);
 
     // Load images in grid
     if(grid['images'] !== undefined) {
@@ -442,11 +480,20 @@ EasyImageCollage.btnChooseLayout = function() {
 };
 
 EasyImageCollage.btnPickLayout = function(layout_element, layout) {
-    jQuery('.eic-editing .eic-container').html(layout_element);
+    var editableLayout = layout ? jQuery(layout_element) : EasyImageCollage.getEditableLayout(layout_element);
+
+    if (!editableLayout.length) {
+        if (window.console && window.console.error) {
+            window.console.error('Easy Image Collage: could not prepare the selected layout for editing.');
+        }
+        return;
+    }
+
+    EasyImageCollage.getLightbox().find('.eic-editing .eic-container').html(editableLayout);
 
     var grid = EasyImageCollage.editing_grid;
 
-    grid['layout'] = layout ? layout : layout_element.data('layout-name');
+    grid['layout'] = layout ? layout : editableLayout.data('layout-name');
     grid['dividers'] = [];
 
     EasyImageCollage.setActivePage('editing');
@@ -1063,13 +1110,18 @@ EasyImageCollage.redrawImages = function() {
 };
 
 EasyImageCollage.setActivePage = function(name) {
-    var pages = ['layouts', 'creating', 'editing', 'manipulating', 'links', 'captions', 'text-frames'];
+    var pages = ['layouts', 'creating', 'editing', 'manipulating', 'links', 'captions', 'text-frames'],
+        lightbox = EasyImageCollage.getLightbox();
+
+    if (!lightbox.length) {
+        return;
+    }
 
     pages.forEach(function(page) {
         if(page == name) {
-            jQuery('.eic-' + page).show();
+            lightbox.find('.eic-' + page).show();
         } else {
-            jQuery('.eic-' + page).hide();
+            lightbox.find('.eic-' + page).hide();
         }
     });
 

@@ -3,14 +3,14 @@
 Plugin Name: Easy Image Collage
 Plugin URI: 
 Description: Create beautiful responsive image collages for all your posts and pages
-Version: 2.0.0
+Version: 2.0.1
 Author: Bootstrapped Ventures
 Author URI: https://bootstrapped.ventures
 License: GPLv2
 Text Domain: easy-image-collage
 Domain Path: /lang
 */
-define( 'EIC_VERSION', '2.0.0' );
+define( 'EIC_VERSION', '2.0.1' );
 define( 'EIC_POST_TYPE', 'eic_grid' );
 
 class EasyImageCollage {
